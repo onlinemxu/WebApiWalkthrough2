@@ -23,7 +23,8 @@ namespace WebApiWalkthrough2
 
             config.Routes.MapHttpRoute(
                 "default",
-                "api2/{controller}");
+                "api2/{controller}/{id}", 
+                defaults: new {id = RouteParameter.Optional});
 
             config.Filters.Add(new TestAuthenticationFilterAttribute());
             //config.Filters.Add(new TestAuthorizationFilterAttribute());

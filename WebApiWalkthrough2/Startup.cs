@@ -13,8 +13,9 @@ namespace WebApiWalkthrough2
         public void Configuration(IAppBuilder app)
         {
 
+            app.CreatePerOwinContext(WalkthroughDbContext.Create);
             app.Use(typeof(TestMiddleware));
-
+           
             //app.UseWindowsAuthentication();
             //app.UseClaimsTransformation(Transformation);
             app.UseBasicAuthentication("demo", ValidateUsers);
