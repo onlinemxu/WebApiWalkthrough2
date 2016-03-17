@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using WebApiWalkthrough2.Models;
 using Microsoft.AspNet.Identity.Owin;
+using WebApiWalkthrough2.Models;
 
 namespace WebApiWalkthrough2.Controllers
 {
+    [Authorize]
     public class CompanyController : ApiController
     {
         private WalkthroughDbContext _appDbContext;
@@ -23,6 +22,8 @@ namespace WebApiWalkthrough2.Controllers
 
         public IEnumerable<Company> Get()
         {
+            var user = User;
+            var currentUserId = User.Identity;
             return ApplicationDbContext.Companies;
         }
 

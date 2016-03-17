@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace WebApiClient
 {
@@ -33,8 +34,30 @@ namespace WebApiClient
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(new Uri(_hostUri), "api/company");
-            client.DefaultRequestHeaders.Authorization = _authenticationHeader;
+            client.DefaultRequestHeaders.Authorization = _authenticationHeader; 
             return client;
+        }
+
+        public async Task<IEnumerable<Company>> GetCompaniesAsync()
+        {
+            HttpResponseMessage response;
+            using (var client = CreateClient())
+            {
+                response = await client.GetAsync(client.BaseAddress);
+            }
+
+            return await response.Content.ReadAsAsync<IEnumerable<Company>>();
+        }
+
+        public async Task<HttpStatusCode> AddCompanyAsync(Company company)
+        {
+            HttpResponseMessage response;
+            using (var client = CreateClient())
+            {
+                response = await client.PostAsJsonAsync(client.BaseAddress, company);
+            }
+
+            return response.StatusCode;
         }
 
         public IEnumerable<Company> GetCompanies()

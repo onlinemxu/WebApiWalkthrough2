@@ -21,4 +21,12 @@ namespace WebApiClient.Client
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(credential));
         }
     }
+
+    public class TokenAuthenticationHeaderValue : AuthenticationHeaderValue
+    {
+        public TokenAuthenticationHeaderValue(string accessToken) 
+            : base("Bearer", accessToken)
+        {
+        }
+    }
 }
